@@ -943,6 +943,7 @@ maxerr: 50, node: true */
             switch (method) {
               case 'ls':
               case 'download':
+              case 'delete':
               case 'upload':
               case 'pwd':
                 return function () {

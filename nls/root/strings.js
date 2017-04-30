@@ -94,6 +94,8 @@ define({
  */
  "eqftp__log__download_success": "File {{filename}} downloaded",
  "eqftp__log__download_error": "There was an error downloading {{filename}}: {{err}}",
+ "eqftp__log__delete_success": "File {{filename}} deleted",
+ "eqftp__log__delete_error": "There was an error deleting {{filename}}: {{err}}",
  "eqftp__log__upload_success": "File {{filename}} uploaded",
  "eqftp__log__upload_error": "There was an error uploading {{filename}}: {{err}}",
  
@@ -120,6 +122,11 @@ define({
  "eqftp__toast__download_error": "Can't download {{filename}}",
  "eqftp__toast__download_error_m": "Can't download files ({{num}})",
  
+ "eqftp__toast__delete_success": "File {{filename}} deleted",
+ "eqftp__toast__delete_success_m": "Files deleted ({{num}})",
+ "eqftp__toast__delete_error": "Can't delete {{filename}}",
+ "eqftp__toast__delete_error_m": "Can't download files ({{num}})",
+    
  "eqftp__toast__upload_success": "File {{filename}} uploaded",
  "eqftp__toast__upload_success_m": "Files uploaded ({{num}})",
  "eqftp__toast__upload_error": "Can't upload {{filename}}",
@@ -144,6 +151,7 @@ define({
  
  "eqftp__context__fileTreeElement__download_open": "Download and open",
  "eqftp__context__fileTreeElement__download": "Download",
+ "eqftp__context__fileTreeElement__delete": "Delete",
  "eqftp__context__fileTreeElement__refresh": "Refresh",
  "eqftp__context__fileTreeElement__open": "Open",
  

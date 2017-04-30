@@ -285,7 +285,7 @@ define(function (require, exports, module) {
                             get: function (connection, prop, receiver) {
                               if (prop in connection) {
                                 return connection[prop];
-                              } else if (['ls', 'upload', 'download', 'queue.next', 'remove'].indexOf(prop) > -1) {
+                              } else if (['ls', 'upload', 'delete', 'download', 'queue.next', 'remove'].indexOf(prop) > -1) {
                                 return function (params) {
                                   return eqftp.connections.__do(_.concat(id, prop.split('.')), ...arguments);
                                 }
@@ -319,6 +319,7 @@ define(function (require, exports, module) {
                 connect: eqftp.connect,
                 openFolder: eqftp.openFolder,
                 download: eqftp.download,
+                delete: eqftp.delete,
                 upload: eqftp.upload,
                 connectionRemove: eqftp.connectionRemove,
                 contexts: eqftp.contexts,
@@ -441,6 +442,19 @@ define(function (require, exports, module) {
             ui.toast.new({
               string: "eqftp__toast__download_success",
               filename: utils.getNamepart(event.data.args[0].localpath, 'filename')
+            }, event.action, 'info');
+          }
+          break;
+        case 'connection:delete':
+          console.log(event);
+          var status = (event.data.queue === 'a' ? 'success' : 'error');
+          eqftp.log(ui.m(strings['eqftp__log__delete_' + status], {
+            filename: utils.getNamepart(event.data.args[0], 'filename')
+          }), status);
+          if (ui.panel.state === 'closed') {
+            ui.toast.new({
+              string: "eqftp__toast__delete_success",
+              filename: utils.getNamepart(event.data.args[0], 'filename')
             }, event.action, 'info');
           }
           break;
@@ -574,6 +588,19 @@ define(function (require, exports, module) {
       //error
     });
   };
+  eqftp.delete = function (id, remotepath) {
+    var args = [...arguments];
+    eqftp.connections[id].delete(remotepath).done(function (data) {
+      //success
+      var parent = FileUtils.getParentPath(remotepath);
+      if (parent.length > 0 && parent.charAt(parent.length-1) == '/') {
+        parent = parent.substring(0, parent.length-1);
+      }
+      eqftp.openFolder(id, parent, function () {}, true);
+    }).fail(function (err) {
+      //error
+    });
+  };
   eqftp.upload = function (localpath) {
     eqftp.connections._getByLocalpath(localpath).done(function (id) {
       var args = [...arguments];
@@ -633,6 +660,13 @@ define(function (require, exports, module) {
               text: strings.eqftp__context__fileTreeElement__download,
               callback: function () {
                 eqftp.download(id, path, false);
+              },
+              shortcut: ""
+            },
+            {
+              text: strings.eqftp__context__fileTreeElement__delete,
+              callback: function () {
+                eqftp.delete(id, path);
               },
               shortcut: ""
             }

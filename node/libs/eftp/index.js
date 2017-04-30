@@ -658,6 +658,54 @@ EFTP.prototype.download = function (queuer, cb) {
   }
 };
 
+EFTP.prototype.delete = function (queuer, cb) {
+  var self = this;
+  if (!this.isConnect) {
+    this.waitConnect(function () {
+      self.delete(queuer, cb);
+    });
+  } else {
+    var p = this.getRealRemotePath(queuer);
+    switch (self.config.type) {
+      case 'sftp':
+        self.client.exec('rm -rf "' + p + '"', function (err, stream) {
+          if (err) {
+            cb(err);
+          } else {
+            self.emit("delete", {
+              localpath: queuer
+            });
+            cb(err, {
+              localpath: queuer
+            });
+          }
+        });
+        break;
+      case 'ftp':
+        self.client.raw.dele(p, function (err) {
+          if (err) {
+            if (cb) {
+              cb(err);
+            }
+          } else {
+            var parent = FileUtil.getParentPath(queuer);
+            self.ls(parent, function () {
+              self.emit("delete", {
+                localpath: queuer
+              });
+              if (cb) {
+                cb(err, {
+                  localpath: queuer
+                });
+              }
+            });
+          }
+        });
+        break;
+    }
+  }
+};
+
 EFTP.prototype.upload = function (queuer, cb) {
   var self = this;
   if (!this.isConnect) {
