@@ -89,6 +89,9 @@ define({
  "eqftp__dialog__connection_editing_unsaved_title": "Dismiss unsaved changes?",
  "eqftp__dialog__connection_editing_unsaved_text": "All changes will be lost",
  
+ "eqftp__dialog__fileTree_delete_title": "Delete {{filename}}?",
+ "eqftp__dialog__fileTree_delete_text": "This action cannot be undone",
+ 
  /**
  * LOGS
  */

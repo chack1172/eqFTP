@@ -673,10 +673,10 @@ EFTP.prototype.delete = function (queuer, cb) {
             cb(err);
           } else {
             self.emit("delete", {
-              localpath: queuer
+              remotepath: queuer
             });
             cb(err, {
-              localpath: queuer
+              remotepath: queuer
             });
           }
         });
@@ -691,11 +691,11 @@ EFTP.prototype.delete = function (queuer, cb) {
             var parent = FileUtil.getParentPath(queuer);
             self.ls(parent, function () {
               self.emit("delete", {
-                localpath: queuer
+                remotepath: queuer
               });
               if (cb) {
                 cb(err, {
-                  localpath: queuer
+                  remotepath: queuer
                 });
               }
             });

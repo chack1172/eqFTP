@@ -446,7 +446,6 @@ define(function (require, exports, module) {
           }
           break;
         case 'connection:delete':
-          console.log(event);
           var status = (event.data.queue === 'a' ? 'success' : 'error');
           eqftp.log(ui.m(strings['eqftp__log__delete_' + status], {
             filename: utils.getNamepart(event.data.args[0], 'filename')
@@ -589,17 +588,40 @@ define(function (require, exports, module) {
     });
   };
   eqftp.delete = function (id, remotepath) {
-    var args = [...arguments];
-    eqftp.connections[id].delete(remotepath).done(function (data) {
-      //success
-      var parent = FileUtils.getParentPath(remotepath);
-      if (parent.length > 0 && parent.charAt(parent.length-1) == '/') {
-        parent = parent.substring(0, parent.length-1);
-      }
-      eqftp.openFolder(id, parent, function () {}, true);
-    }).fail(function (err) {
-      //error
+    var args = [...arguments],
+        del = _.once(function () {
+      eqftp.connections[id].delete(remotepath).done(function (data) {
+        //success
+        var path = FileUtils.getParentPath(remotepath);
+        if (path.length > 0 && path.charAt(path.length-1) == '/') {
+          path = path.substring(0, path.length-1);
+        }
+        if (path === '') {
+          ui.fileTree.reset();
+        }
+        eqftp.openFolder(id, path, function () {}, true);
+      }).fail(function (err) {
+        //error
+      });
     });
+    ui.dialog.new({
+      title: ui.m(strings.eqftp__dialog__fileTree_delete_title, {
+        filename: utils.getNamepart(remotepath, 'filename')
+      }),
+      text: strings.eqftp__dialog__fileTree_delete_text,
+      actions: [
+        {
+          title: strings.eqftp__controls__delete,
+          callback: function () {
+            del();
+          }
+        },
+        {
+          title: strings.eqftp__controls__back,
+          callback: function () {}
+        }
+      ]
+    })
   };
   eqftp.upload = function (localpath) {
     eqftp.connections._getByLocalpath(localpath).done(function (id) {

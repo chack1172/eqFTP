@@ -89,6 +89,10 @@ define({
  "eqftp__dialog__connection_editing_unsaved_title": "Dimenticare le modifiche non salvate?",
  "eqftp__dialog__connection_editing_unsaved_text": "Tutte le modifiche sarranno perse",
  
+ "eqftp__dialog__fileTree_delete_title": "Eliminare {{filename}}?",
+ "eqftp__dialog__fileTree_delete_text": "Questa azione non può essere annullata",
+ "eqftp__dialog__fileTree_delete_local": "Elimina file locale",
+ 
  /**
  * LOGS
  */
