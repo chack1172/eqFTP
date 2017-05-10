@@ -560,7 +560,7 @@ define(function (require, exports, module) {
     if (!_.isEmpty(ui.fileTree._rendered) && _.has(ui.fileTree._rendered, path) && !refresh) {
       ui.fileTree.itemToggle(path);
     } else {
-      eqftp.connections[id].ls(path).done(function (elements) {
+      eqftp.connections[id].ls(path).done(function (elements) {console.log(elements);
         ui.fileTree.add(elements, path);
         ui.fileTree.title.set(eqftp.connections[id].name);
         if (_.isFunction(callback)) {
@@ -592,13 +592,7 @@ define(function (require, exports, module) {
         del = _.once(function () {
       eqftp.connections[id].delete(remotepath).done(function (data) {
         //success
-        var path = FileUtils.getParentPath(remotepath);
-        if (path.length > 0 && path.charAt(path.length-1) == '/') {
-          path = path.substring(0, path.length-1);
-        }
-        if (path === '') {
-          ui.fileTree.reset();
-        }
+        var path = FileUtils.getParentPath(remotepath).replace(/\/$/, '');
         eqftp.openFolder(id, path, function () {}, true);
       }).fail(function (err) {
         //error

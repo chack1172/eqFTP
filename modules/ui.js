@@ -534,7 +534,7 @@ define(function (require, exports, module) {
         object = [object];
       }
       var parent = false;
-      if (!_.isEmpty(self._rendered)) {
+      if (path != "" && !_.isEmpty(self._rendered)) {
         parent = self.tpl.find('div[id="' + path + '"] .eqftp-fileTree__children');
         if (parent.length === 0) {
           if ((((_.keys(self._rendered)).sort(utils.byLevels))[0]).levels() < path.levels()) {
