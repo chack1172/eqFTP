@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://github.com/Equals182/eqFTP/releases/tag/v1.0.0-beta.1" target="_blank"><img src="https://github.com/Equals182/eqFTP/raw/master/docs/assets/images/0.jpg" alt="eqFTP"/></a>
+  <a href="https://github.com/chack1172/eqFTP/releases/tag/v1.0.0-beta.1" target="_blank"><img src="https://github.com/chack1172/eqFTP/raw/master/docs/assets/images/0.jpg" alt="eqFTP"/></a>
 </p>
 
 ## Your favorite FTP tool is back
@@ -23,4 +23,4 @@ We changed the code. Also entirely. Now it's a lot more structured and well-desi
 
 ## Troubleshooting
 
-If you experiencing problems, please feel free to [create a new issue](https://github.com/Equals182/eqFTP/issues/new). Also please check existing issues before creating a new one.
+If you experiencing problems, please feel free to [create a new issue](https://github.com/chack1172/eqFTP/issues/new). Also please check existing issues before creating a new one.
